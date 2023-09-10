@@ -26,7 +26,7 @@ def get_tag(urlPage_text : str, tagName : str, **kwargs):
 
     _soup = BeautifulSoup(urlPage_text, "html.parser")
     tag = _soup.find(tagName, **kwargs)
-    print(tag)
+    #print(tag)                  
     return tag
 
 def get_attrValue(urlPage_text : str, tagName : str, attr : str, **kwargs):
