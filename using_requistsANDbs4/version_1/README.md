@@ -1,25 +1,20 @@
 ## Resources
 Read or watch:
-- Inheritance
-- Multiple inheritance
-- Inheritance in Python
-- Learn to Program 10 : Inheritance Magic Methods
+- What is a HashTable Data Structure - Introduction to Hash Tables , Part 0
+- Hash function
+- Hash table
+- All about hash tables
+- why hash tables and not arrays
 
 ## Learning Objectives
 At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
 ### General
-- Why Python programming is awesome
-- What is a superclass, baseclass or parentclass
-- What is a subclass
-- How to list all attributes and methods of a class or instance
-- When can an instance have new attributes
-- How to inherit class from another
-- How to define a class with multiple base classes
-- What is the default class every class inherit from
-- How to override a method or attribute inherited from the base class
-- Which attributes or methods are available by heritage to subclasses
-- What is the purpose of inheritance
-- What are, when and how to use isinstance, issubclass, type and super built-in functions
+- What is a hash function
+- What makes a good hash function
+- What is a hash table, how do they work and how to use them
+- What is a collision and what are the main ways of dealing with collisions in the context of a hash table
+- What are the advantages and drawbacks of using hash tables
+- What are the most common use cases of hash tables
 
 ### Copyright - Plagiarism
 - You are tasked to come up with solutions for the tasks below yourself to meet with the above learning objectives.
@@ -28,28 +23,52 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 - Any form of plagiarism is strictly forbidden and will result in removal from the program.
 
 ## Requirements
-### Python Scripts
+### General
 - Allowed editors: vi, vim, emacs
-- All your files will be interpreted/compiled on Ubuntu 20.04 LTS using python3 (version 3.8.5)
+- All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
 - All your files should end with a new line
-- The first line of all your files should be exactly #!/usr/bin/python3
-- A README.md file, at the root of the folder of the project, is mandatory
-- Your code should use the pycodestyle (version 2.8.*)
-- All your files must be executable
-- The length of your files will be tested using wc
+- A README.md file, at the root of the folder of the project is mandatory
+- Your code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
+- You are not allowed to use global variables
+- No more than 5 functions per file
+- You are allowed to use the C standard library
+- The prototypes of all your functions should be included in your header file called hash_tables.h
+- Don’t forget to push your header file
+- All your header files should be include guarded
 
-### Python Test Cases
-- Allowed editors: vi, vim, emacs
-- All your files should end with a new line
-- All your test files should be inside a folder tests
-- All your test files should be text files (extension: .txt)
-- All your tests should be executed by using this command: python3 -m doctest ./tests/*
-- All your modules should have a documentation (python3 -c 'print(__import__("my_module").__doc__)')
-- All your classes should have a documentation (python3 -c 'print(__import__("my_module").MyClass.__doc__)')
-- All your functions (inside and outside a class) should have a documentation (python3 -c 'print(__import__("my_module").my_function.__doc__)' and python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)')
-- A documentation is not a simple word, it’s a real sentence explaining what’s the purpose of the module, class or method (the length of it will be verified)
-- We strongly encourage you to work together on test cases, so that you don’t miss any edge case
+## More Info
+### Data Structures
+Please use these data structures for this project:
+`/**
+ * struct hash_node_s - Node of a hash table
+ *
+ * @key: The key, string
+ * The key is unique in the HashTable
+ * @value: The value corresponding to a key
+ * @next: A pointer to the next node of the List
+ */
+typedef struct hash_node_s
+{
+     char *key;
+     char *value;
+     struct hash_node_s *next;
+} hash_node_t;
 
-### Documentation
-- Do not use the words import or from inside your comments, the checker will think you try to import some modules
-
+/**
+ * struct hash_table_s - Hash table data structure
+ *
+ * @size: The size of the array
+ * @array: An array of size @size
+ * Each cell of this array is a pointer to the first node of a linked list,
+ * because we want our HashTable to use a Chaining collision handling
+ */
+typedef struct hash_table_s
+{
+     unsigned long int size;
+     hash_node_t **array;
+} hash_table_t;`
+### Tests
+We strongly encourage you to work all together on a set of tests
+### Python Dictionaries
+Python dictionaries are implemented using hash tables. When you will be done with this project, you will be able to better understand the power and simplicity of Python dictionaries. So much is actually happening when you type d = {'a': 1, 'b': 2}, but everything looks so simple for the user. Python doesn’t use the exact same implementation than the one you will work on today though. If you are curious on how it works under the hood, here is a good blog post about how dictionaries are implemented in Python 2.7 (not mandatory)
+Note that all dictionaries are not implemented using hash tables and there is a difference between a dictionary and a hash table. Read more here (not mandatory)
