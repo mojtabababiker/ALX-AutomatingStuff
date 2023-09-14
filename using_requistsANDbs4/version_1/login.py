@@ -1,3 +1,4 @@
+
 """
 Handle the login process, incluing generating the login form data, headers
 and send a post requests to the server getting the dashboard of the user.
@@ -35,10 +36,10 @@ def get_loginForm() -> dict:
     }
     return login_form
 
-def login():
+def login(session):
     """
     Syntax:
-        login.login()
+        login.login(session)
 
     Description:
         Use the config and soup module to generate the login for payload, and
@@ -51,19 +52,18 @@ def login():
     url = config.get_url()
     headers = config.get_headers()
     login_form = get_loginForm()
-    
-    with requests.Session() as session:
-        login_page = session.get(url)
-        _auth_tocken = soup.get_attrValue(login_page.text, "input", "value")
-        if _auth_tocken is None:
-            print("===========[ERROR]==========")
-            exit(-1)
-        login_form['authenticity_token'] = _auth_tocken
-        dash_board = session.post(url, data=login_form, headers=headers)
+
+    login_page = session.get(url)
+    _auth_tocken = soup.get_attrValue(login_page.text, "input", "value")
+    if _auth_tocken is None:
+        print("===========[ERROR]==========")
+        exit(-1)
+    login_form['authenticity_token'] = _auth_tocken
+    dash_board = session.post(url, data=login_form, headers=headers)
 
     return dash_board
 
 
 
 if __name__ == "__main__":
-    main()
+    login()
