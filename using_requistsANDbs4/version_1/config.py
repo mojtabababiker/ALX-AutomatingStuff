@@ -57,14 +57,7 @@ def get_login_credentials() -> tuple:
             os.mkdir(h_folder)
         user_email = input("Enter Email: ")
         user_password = getpass.getpass(prompt="Enter Password: ", stream=None)
-        """
-        try :
-            with shelve.open(".shelf/.login_credentials") as fh:
-                fh['user_email'] = user_email
-                fh['user_password'] = user_password
-        except Exception as ex:
-            pass
-        """
+
         with shelve.open(h_credentals) as fh:
             fh['user_email'] = user_email
             fh['user_password'] = user_password
