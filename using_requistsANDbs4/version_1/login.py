@@ -8,6 +8,7 @@ Methods:
     3. login()
 
 """
+import getpass
 import requests
 import config
 import soup
@@ -60,6 +61,18 @@ def login(session):
         exit(-1)
     login_form['authenticity_token'] = _auth_tocken
     dash_board = session.post(url, data=login_form, headers=headers)
+    #  check if the username and password are correct by passing the message
+    #+ shows in the intranet dashboard when login credintials are wrong
+    if "Invalid Email or password" in dash_board.text:
+        print("Invalid Email or password please try again")
+        file_path = ".shelf/.login_credentials"
+        try:
+            with open(file_path, 'w') as file:
+                file.truncate(0)
+        except FileNotFoundError:
+            pass
+
+        exit()
 
     return dash_board
 
