@@ -24,6 +24,7 @@ class ReadmeBuilder:
         the project html page source
         """
         self.projectText = projectText
+        self.projectName = soup.get_tag(self.projectText, "h1", class_="gap").text
         self.markers = {
             "p": self.pragraph,
             "pre": self.pre,
@@ -45,6 +46,7 @@ class ReadmeBuilder:
         self.projDesc = soup.get_tag(self.projectText, "div", class_="panel-body")
         #print(self.projDesc)
         with open("README.md", "w", encoding="utf-8") as fh:
+            fh.write("# " + self.projectName + "\n")
             for element in self.projDesc.children:
                 line = self.extract(element)
                 #print(element)
