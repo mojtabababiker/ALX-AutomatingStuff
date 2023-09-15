@@ -1,8 +1,11 @@
-"""
+#!/usr/bin/python3
+"""Get login credentials.
+
 syntax:
        import config
 Description:
-       Handle the user `email` and `password` and the url and header generating.
+       Handle the user `email` and `password` and the url and header
+       generating.
        Checking the `.login_credentials` file first before asking the user
        to enter them.
        The url is cretical, so we have two options for the url:
@@ -12,19 +15,23 @@ Description:
              1. get_login_credentials()
                     Return the logging credentials of the user
              2. get_url()
-                    Check if the user provided a url as command line arg, if so it will return the default `url` which is the login page
+                    Check if the user provided a url as command line arg,
+                    if so it will return the default `url`
+                        which is the login page
              3. get_headers()
-                    Generate the headers for the url request that will be preduced
-
+                    Generate the headers for the url
+                    request that will be preduced
 """
 
-#import regex
+# import regex
 import shelve
 import getpass
+import os
 
 
 def get_login_credentials() -> tuple:
-    """
+    """Get login credentials.
+
     syntax:
          config.get_login_credentials()
 
@@ -38,24 +45,35 @@ def get_login_credentials() -> tuple:
     Return:
          a tuple consist of (user_email, user_password)
     """
+    h_folder = ".shelf/"
+    h_credentals = os.path.join(h_folder, ".login_credentials")
     try:
-        with shelve.open(".shelf/.login_credentials", "r") as fh:
+        with shelve.open(h_credentals, "r") as fh:
             user_email = fh['user_email']
             user_password = fh['user_password']
         return (user_email, user_password)
     except Exception as e:
+        if not os.path.isdir(h_folder):
+            os.mkdir(h_folder)
         user_email = input("Enter Email: ")
         user_password = getpass.getpass(prompt="Enter Password: ", stream=None)
+        """
         try :
             with shelve.open(".shelf/.login_credentials") as fh:
                 fh['user_email'] = user_email
                 fh['user_password'] = user_password
         except Exception as ex:
             pass
+        """
+        with shelve.open(h_credentals) as fh:
+            fh['user_email'] = user_email
+            fh['user_password'] = user_password
         return (user_email, user_password)
-                        
+
+
 def get_url() -> str:
-    """
+    """Get project url.
+
     Syntax:
          config.get_url()
 
@@ -67,11 +85,12 @@ def get_url() -> str:
     Return:
          A string representing the `url`
     """
-
     return r"https://intranet.alxswe.com/auth/sign_in"
 
+
 def get_headers() -> dict:
-    """
+    """Get login headers.
+
     Syntax:
          config.get_headers()
 
@@ -83,17 +102,16 @@ def get_headers() -> dict:
     Return:
          a dictionery wich representing the request headers
     """
-
     headers = {
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
-        "Origin":"https://intranet.alxswe.com",
-        "Referer":get_url()
+        "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
+        (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
+        "Origin": "https://intranet.alxswe.com",
+        "Referer": get_url(),
     }
     return headers
 
 
-
-    
 if __name__ == "__main__":
     us, ps = get_login_credentials()
     print('User name: {}'.format(us))
