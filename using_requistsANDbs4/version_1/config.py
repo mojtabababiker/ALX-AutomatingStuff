@@ -46,9 +46,12 @@ def get_login_credentials() -> tuple:
     except Exception as e:
         user_email = input("Enter Email: ")
         user_password = getpass.getpass(prompt="Enter Password: ", stream=None)
-        with shelve.open(".shelf/.login_credentials") as fh:
-            fh['user_email'] = user_email
-            fh['user_password'] = user_password
+        try :
+            with shelve.open(".shelf/.login_credentials") as fh:
+                fh['user_email'] = user_email
+                fh['user_password'] = user_password
+        except Exception as ex:
+            pass
         return (user_email, user_password)
                         
 def get_url() -> str:
