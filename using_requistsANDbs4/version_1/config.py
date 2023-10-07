@@ -27,7 +27,7 @@ Description:
 import shelve
 import getpass
 import os
-
+import subprocess
 
 def get_login_credentials() -> tuple:
     """Get login credentials.
@@ -45,7 +45,9 @@ def get_login_credentials() -> tuple:
     Return:
          a tuple consist of (user_email, user_password)
     """
-    h_folder = ".shelf/"
+    user = subprocess.run("whoami", shell=True, capture_output=True,
+                          encoding="utf-8")
+    h_folder = f"/home/{user.stdout.strip()}/.shelf/"
     h_credentals = os.path.join(h_folder, ".login_credentials")
     try:
         with shelve.open(h_credentals, "r") as fh:
@@ -62,6 +64,22 @@ def get_login_credentials() -> tuple:
             fh['user_password'] = user_password
         return (user_email, user_password)
 
+def remove_login_credentials():
+    """
+    Syntax:
+        config.remove_login_credentials()
+
+    Description:
+        Delete the credentials file if it's exists
+    """
+
+    user = subprocess.run("whoami", shell=True, capture_output=True,
+                          encoding="utf-8")
+
+    h_folder = f"/home/{user.stdout.strip()}/.shelf/"
+    h_credentials = os.path.join(h_folder, ".login_credentials")
+    if os.path.isfile(h_credentials):
+        subprocess.run(f"rm -f {h_credentials}", shell=True)
 
 def get_url() -> str:
     """Get project url.
@@ -108,5 +126,5 @@ if __name__ == "__main__":
     us, ps = get_login_credentials()
     print('User name: {}'.format(us))
     print('User Password: {}'.format(ps))
-    print(get_url())
-    print(get_headers().items())
+    #print(get_url())
+    #print(get_headers().items())

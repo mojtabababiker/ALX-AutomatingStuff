@@ -13,6 +13,26 @@ import config
 import soup
 
 
+def check_login(dashBoard : str) -> bool:
+    """
+    Syntax:
+        login.check_login(dashBoard : str) -> bool
+
+    Description:
+        Check the login process and validate user email and password,
+        by parsing the dashBoard page
+
+    Return:
+        Return a bool value True if the login was correct, Fale otherwise
+    """
+    __notvalid = soup.get_tag(dashBoard, "div",
+                            class_="alert alert-danger sm-gap big-zindex")
+    if __notvalid:
+        print(__notvalid.text)
+        return False
+
+    return True
+
 def get_loginForm() -> dict:
     """
     Syntax:
@@ -60,7 +80,7 @@ def login(session):
         exit(-1)
     login_form['authenticity_token'] = _auth_tocken
     dash_board = session.post(url, data=login_form, headers=headers)
-
+    #print("dash_board.status = {}".format(dash_board.status_code))
     return dash_board
 
 
