@@ -59,9 +59,13 @@ def get_login_credentials() -> tuple:
             os.mkdir(h_folder)
         user_email = input("Enter Email: ")
         user_password = getpass.getpass(prompt="Enter Password: ", stream=None)
+
         with shelve.open(h_credentals) as fh:
             fh['user_email'] = user_email
             fh['user_password'] = user_password
+        except Exception as ex:
+            pass
+
         return (user_email, user_password)
 
 def remove_login_credentials():

@@ -8,6 +8,7 @@ Methods:
     3. login()
 
 """
+import getpass
 import requests
 import config
 import soup
@@ -80,7 +81,9 @@ def login(session):
         exit(-1)
     login_form['authenticity_token'] = _auth_tocken
     dash_board = session.post(url, data=login_form, headers=headers)
+
     #print("dash_board.status = {}".format(dash_board.status_code))
+
     return dash_board
 
 
