@@ -11,40 +11,44 @@ import sys
 class ReadmeBuilder:
     """
     Syntax:
-        ReadmeBuilder(projectText)
+        ReadmeBuilder(projectText, projectName)
 
     Description:
-        A class that responsible of generating the README file from the project descripions
-        in the ALX intranet project page
+        A class that responsible of generating the README file from
+        the project descripions in the ALX intranet project page
     """
 
-    def __init__(self, projectText):
+    def __init__(self, projectText, projectName):
         """
-        ReadmeBuilder constructer, initialize the calss with the projectText as
-        the project html page source
+        ReadmeBuilder constructer, initialize the calss with the projectText
+        as project html page source
         """
+
         self.projectText = projectText
+        self.projectName = projectName
         self.markers = {
             "p": self.pragraph,
             "pre": self.pre,
             "ul": self.ul,
             "a": self.links
             }
-            
+
     def parse(self):
         """
         Syntax:
             ReadmeBuilder.pars(seld)
 
         Description:
-            Parse the project page allocates all the headers, pragrraphs, list elemnts,
-            and all the html elements that represent the project description
-
+            Parse the project page allocates all the headers, pragrraphs,
+            list elemnts, and all the html elements that represent
+            the project description
         """
 
-        self.projDesc = soup.get_tag(self.projectText, "div", class_="panel-body")
+        self.projDesc = soup.get_tag(self.projectText, "div",
+                                     class_="panel-body")
         #print(self.projDesc)
         with open("README.md", "w", encoding="utf-8") as fh:
+            fh.write("# {}\n".format(self.projectName))
             for element in self.projDesc.children:
                 line = self.extract(element)
                 #print(element)
@@ -61,8 +65,8 @@ class ReadmeBuilder:
             ReadmeBuilder.extract(self, element)
 
         Description:
-            Extract the project description lines and creats the equivelant Mark Down
-            lines for them, with the use of the helper functions
+            Extract the project description lines and creats the equivelant
+            Mark Down for them, with the use of the helper functions
         """
         elementName = element.name
         #print(element.name, " : ", element.text)

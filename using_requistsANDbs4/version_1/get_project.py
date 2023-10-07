@@ -16,12 +16,14 @@ def get_projectsList(dashBoard) -> dict:
     DOCOMENTAIONS HERE
     """
     #dashBoard = login.login()
-    projectsList = soup.get_tag(dashBoard.text, "ul", class_="list-group")
+    projects_col = soup.get_tag(dashBoard.text, "div", class_="col-md-6")
+    projectsList = projects_col.find_all("div", "panel panel-default")[-1]
     projects = dict()
 
     if projectsList is None:
-        raise Exception("A Captian Lock need to be Done")
-    
+        print("A Captian Lock need to be Done")
+        exit(1)
+
     try:
         for projectItem in projectsList.find_all("li"):
             for projectName in projectItem.find_all("a"):
@@ -38,18 +40,17 @@ def get_project(projectName : str, session, dashBoard):
     DOCOMENTIONS HERE
     """
     project = get_projectsList(dashBoard).get(projectName, None)
+
     if project is None:
-        raise ValueError("Unrecognized Project Name {}".format(projectName))
+        print("Unrecognized Project Name {}".format(projectName))
+        exit(1)
     try:
-        #print(project)
         projectPage = session.get(r"https://intranet.alxswe.com" + project)
         print(projectPage.status_code)
-        #print("https://intranet.alxswe.com" + project)
 
     except ConnectionError as e:
         print(str(e))
-
-        exit(-1)
+        exit(1)
 
     #sop = BeautifulSoup(projectPage.text, 'html.parser')
     #hd = sop.find('h1')

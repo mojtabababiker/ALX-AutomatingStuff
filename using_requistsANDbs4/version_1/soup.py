@@ -17,7 +17,7 @@ def get_tag(urlPage_text : str, tagName : str, **kwargs):
     soup.get_tag(urlPage_text : str, tagName : str, **kwargs)
 
     Description:
-        Use the BeautifulSoup Class to parse urlPage_text html and find 
+        Use the BeautifulSoup Class to parse urlPage_text html and find
         and return the tag tagName
 
     Return:
@@ -26,17 +26,19 @@ def get_tag(urlPage_text : str, tagName : str, **kwargs):
 
     _soup = BeautifulSoup(urlPage_text, "html.parser")
     tag = _soup.find(tagName, **kwargs)
-    #print(tag)                  
+    #print(tag)
     return tag
 
-def get_attrValue(urlPage_text : str, tagName : str, attr : str, **kwargs):
+def get_attrValue(urlPage_text : str, tagName : str,
+                  attr : str, **kwargs) -> str:
     """
-    soup.get_attrValue(urlPage_text : str, tagName : str, attr : str, **kwargs) -> str
+    soup.get_attrValue(urlPage_text : str, tagName : str,
+                       attr : str, **kwargs) -> str
 
     Description:
-        Call the soup.get_tag(urlPage_text, taggName, **kwargs) passing the urlPage_text
-        and tagName beside the **kwargs, and then find the attribute attr on it and
-        return its value
+        Call the soup.get_tag(urlPage_text, taggName, **kwargs) passing
+        the urlPage_text and tagName beside the **kwargs, and then
+        find the attribute attr on it and return its value
 
     Return:
         A string which represent the attr value, or None in failure
