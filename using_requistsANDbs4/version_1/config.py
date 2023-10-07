@@ -45,6 +45,7 @@ def get_login_credentials() -> tuple:
     Return:
          a tuple consist of (user_email, user_password)
     """
+
     user = subprocess.run("whoami", shell=True, capture_output=True,
                           encoding="utf-8")
     h_folder = f"/home/{user.stdout.strip()}/.shelf/"
@@ -63,10 +64,8 @@ def get_login_credentials() -> tuple:
         with shelve.open(h_credentals) as fh:
             fh['user_email'] = user_email
             fh['user_password'] = user_password
-        except Exception as ex:
-            pass
 
-        return (user_email, user_password)
+    return (user_email, user_password)
 
 def remove_login_credentials():
     """
