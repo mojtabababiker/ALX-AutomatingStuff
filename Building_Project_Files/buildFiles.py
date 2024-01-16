@@ -61,6 +61,6 @@ class FileBuilder:
         """
         file_name_container = file_info_list.find_all('li')[-1]
         fileName = file_name_container.find('code').text
-        f = os.open(f"{fileName}.test", os.O_CREAT, mode=self.filePerms)
+        f = os.open(f"{fileName}", os.O_CREAT, mode=self.filePerms)
         os.close(f)
   

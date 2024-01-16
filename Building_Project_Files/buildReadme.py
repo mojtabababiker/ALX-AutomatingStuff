@@ -44,9 +44,12 @@ class ReadmeBuilder:
             the project description
         """
 
-        self.projDesc = soup.get_tag(self.projectText, "div",
-                                     class_="panel-body")
+        self.proj_container = soup.get_tag(self.projectText, "div",
+                                     id="project-description")
         #print(self.projDesc)
+
+        self.projDesc = self.proj_container.find("div", class_="panel-body")
+
         with open("README.md", "w", encoding="utf-8") as fh:
             fh.write("# {}\n".format(self.projectName))
             for element in self.projDesc.children:

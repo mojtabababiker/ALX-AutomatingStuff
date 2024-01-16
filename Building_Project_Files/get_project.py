@@ -27,11 +27,11 @@ def get_projectsList(dashBoard) -> dict:
     try:
         for projectItem in projectsList.find_all("li"):
             for projectName in projectItem.find_all("a"):
-                projects[projectName.text] = projectName.get("href")
+                projects[projectName.text.strip()] = projectName.get("href")
     except Exception as e:
         print(str(e))
         exit(-1)
-    #pprint(projects.items())
+
     return projects
 
 

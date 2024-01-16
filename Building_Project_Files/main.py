@@ -40,8 +40,8 @@ def main():
         #projectText = soup.get_tag(projectPage.text, "body")
 
         #print(projectText.h1)
-        #readme = buildReadme.ReadmeBuilder(projectPage.text, projectName)
-        #readme.parse()
+        readme = buildReadme.ReadmeBuilder(projectPage.text, projectName)
+        readme.parse()
         files = buildFiles.FileBuilder(projectPage.text)
         files.parse()
 
