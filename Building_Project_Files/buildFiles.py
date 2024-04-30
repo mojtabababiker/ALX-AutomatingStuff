@@ -60,7 +60,18 @@ class FileBuilder:
             the text from it
         """
         file_name_container = file_info_list.find_all('li')[-1]
-        fileName = file_name_container.find('code').text
-        f = os.open(f"{fileName}", os.O_CREAT, mode=self.filePerms)
-        os.close(f)
+        fileNames = file_name_container.find('code').text
+        for fileName in fileNames.split(', '):
+            try:
+                dirs = os.path.normcase('/'.join(fileName.split('/')[:-1]))
+                name = fileName.split('/')[-1]
+                try:
+                    os.makedirs(os.path.join(os.getcwd(), dirs))
+                except:
+                    pass
+                path = os.path.join(dirs, name)
+                f = os.open(f"{path}", os.O_CREAT, mode=self.filePerms)
+                os.close(f)
+            except Exception as e:
+                print(e)
   
