@@ -46,10 +46,10 @@ def get_login_credentials() -> tuple:
          a tuple consist of (user_email, user_password)
     """
 
-    user = subprocess.run("whoami", shell=True, capture_output=True,
-                          encoding="utf-8")
-    h_folder = f"/home/{user.stdout.strip()}/.shelf/"
+    user = getpass.getuser()
+    h_folder = f"/home/{user}/.shelf/"
     h_credentals = os.path.join(h_folder, ".login_credentials")
+
     try:
         with shelve.open(h_credentals, "r") as fh:
             user_email = fh['user_email']
